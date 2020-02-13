@@ -10,7 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 //
 import { AngularFireModule} from '@angular/fire';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
+//import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth'
 
@@ -23,7 +24,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth'
     HttpClientModule,
     //
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule,
+    AngularFirestoreModule,
     FormsModule,
     AngularFireAuthModule,
     // Vex

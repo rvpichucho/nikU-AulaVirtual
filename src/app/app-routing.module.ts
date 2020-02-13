@@ -15,7 +15,7 @@ const childrenRoutes: VexRoutes = [
   },
   {
     path: 'apps',
-    children: [
+      children: [
       {
         path: 'chat',
         loadChildren: () => import('./pages/apps/chat/chat.module').then(m => m.ChatModule),
@@ -23,6 +23,11 @@ const childrenRoutes: VexRoutes = [
           toolbarShadowEnabled: true
         }
       },
+      {
+        path : 'estudiante',
+        loadChildren: () => import('./pages/apps/estudiante/estudiante.module').then(m => m.EstudianteModule)
+      },
+  
       {
         path: 'contacts',
         loadChildren: () => import('./pages/apps/contacts/contacts.module').then(m => m.ContactsModule)

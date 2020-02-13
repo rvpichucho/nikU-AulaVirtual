@@ -36,7 +36,7 @@ import { Style, StyleService } from '../@vex/services/style.service';
 import theme from '../@vex/utils/tailwindcss';
 import icChromeReaderMode from '@iconify/icons-ic/twotone-chrome-reader-mode';
 //
-import { AngularFireDatabase} from '@angular/fire/database';
+import { AngularFirestore} from '@angular/fire/firestore';
 import { Observable} from 'rxjs';
 
 @Component({
@@ -52,7 +52,7 @@ export class AppComponent {
 
   constructor(
               //
-                public db : AngularFireDatabase,
+                public db : AngularFirestore,
               //
               private configService: ConfigService,
               private styleService: StyleService,
@@ -66,14 +66,11 @@ export class AppComponent {
               private navigationService: NavigationService,
               private splashScreenService: SplashScreenService) {
 
-                this.items = db.list('items').valueChanges();
+                this.items = db.collection('items').valueChanges();
                 this.itemValue='hola si funciona';
                 console.log(this.itemValue);
-                this.db.list('items').push({content: this.itemValue});
+                this.db.collection('items').add({content: this.itemValue});
                 
-
-
-
     this.iconRegistry.setDefaultFontSetClass('iconify');
     Settings.defaultLocale = this.localeId;
 
