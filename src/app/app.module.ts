@@ -10,7 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 //
 import { AngularFireModule} from '@angular/fire';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
+//import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
@@ -22,7 +23,7 @@ import { environment } from 'src/environments/environment';
     HttpClientModule,
     //
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule,
+    AngularFirestoreModule,
     FormsModule,
     // Vex
     VexModule
