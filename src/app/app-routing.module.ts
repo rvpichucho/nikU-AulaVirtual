@@ -13,9 +13,14 @@ const childrenRoutes: VexRoutes = [
     path: 'dashboards/analytics',
     loadChildren: () => import('./pages/dashboards/dashboard-analytics/dashboard-analytics.module').then(m => m.DashboardAnalyticsModule),
   },
-  {
+   {
     path: 'apps',
-      children: [
+    children: [
+      {
+        path: 'estudiante',
+        loadChildren:() => import('./pages/apps/estudiante/estudiante.module').then(m => m.EstudianteModule)
+      },
+      
       {
         path: 'chat',
         loadChildren: () => import('./pages/apps/chat/chat.module').then(m => m.ChatModule),
@@ -24,14 +29,10 @@ const childrenRoutes: VexRoutes = [
         }
       },
       {
-        path : 'estudiante',
-        loadChildren: () => import('./pages/apps/estudiante/estudiante.module').then(m => m.EstudianteModule)
-      },
-  
-      {
         path: 'contacts',
         loadChildren: () => import('./pages/apps/contacts/contacts.module').then(m => m.ContactsModule)
       },
+      
       {
         path: 'calendar',
         loadChildren: () => import('./pages/apps/calendar/calendar.module').then(m => m.CalendarModule),
@@ -60,6 +61,7 @@ const childrenRoutes: VexRoutes = [
   {
     path: 'pages',
     children: [
+     
       {
         path: 'pricing',
         loadChildren: () => import('./pages/pages/pricing/pricing.module').then(m => m.PricingModule)
@@ -87,6 +89,13 @@ const childrenRoutes: VexRoutes = [
       {
         path: 'error-500',
         loadChildren: () => import('./pages/pages/errors/error-500/error-500.module').then(m => m.Error500Module)
+      },
+      {
+        path: "**",
+        loadChildren: () =>
+          import("./pages/pages/errors/error-404/error-404.module").then(
+            m => m.Error404Module
+          )
       }
     ]
   },
@@ -148,6 +157,7 @@ const routes: Routes = [
     path: 'coming-soon',
     loadChildren: () => import('./pages/pages/coming-soon/coming-soon.module').then(m => m.ComingSoonModule),
   },
+ 
   {
     path: '',
     component: LayoutComponent,
@@ -161,7 +171,9 @@ const routes: Routes = [
     scrollPositionRestoration: 'enabled',
     relativeLinkResolution: 'corrected',
     anchorScrolling: 'enabled'
-  })],
+  })
+  
+],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
