@@ -15,6 +15,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth'
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -28,7 +29,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth'
     FormsModule,
     AngularFireAuthModule,
     // Vex
-    VexModule
+    VexModule,
+    //EstudianteAppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

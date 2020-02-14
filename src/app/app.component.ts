@@ -38,6 +38,9 @@ import icChromeReaderMode from '@iconify/icons-ic/twotone-chrome-reader-mode';
 //
 import { AngularFirestore} from '@angular/fire/firestore';
 import { Observable} from 'rxjs';
+//
+import { Estudiante } from 'src/app/models/estudiante';
+
 
 @Component({
   selector: 'vex-root',
@@ -49,6 +52,7 @@ export class AppComponent {
   itemValue = '';
   items: Observable<any[]>;
 
+  estudiante: Estudiante;
 
   constructor(
               //
@@ -66,11 +70,14 @@ export class AppComponent {
               private navigationService: NavigationService,
               private splashScreenService: SplashScreenService) {
 
-                this.items = db.collection('items').valueChanges();
-                this.itemValue='hola si funciona';
-                console.log(this.itemValue);
-                this.db.collection('items').add({content: this.itemValue});
-                
+                //this.items = db.collection('estudiante').valueChanges();
+                //this.itemValue='hola si funciona';
+                /*this.estudiante = new Estudiante(this.itemValue);    
+                this.estudiante.idEstudiante= 2;
+                console.log(this.estudiante);
+
+                this.db.collection('estudiante').doc(db.createId()).set(Object.assign({}, this.estudiante));
+                */
     this.iconRegistry.setDefaultFontSetClass('iconify');
     Settings.defaultLocale = this.localeId;
 
@@ -106,6 +113,17 @@ export class AppComponent {
         type: 'subheading',
         label: 'Apps',
         children: [
+          {
+            type: 'link',
+            label: 'estudiante',
+            route: '/apps/estudiante',
+            icon: icChat,
+            badge: {
+              value: '16',
+              background: theme.colors.cyan['500'],
+              color: theme.textColor['cyan-contrast']['600']
+            },
+          },
           {
             type: 'link',
             label: 'All-In-One Table',
@@ -161,6 +179,7 @@ export class AppComponent {
               color: theme.textColor['cyan-contrast']['600']
             },
           },
+          
           {
             type: 'link',
             label: 'WYSIWYG Editor',
