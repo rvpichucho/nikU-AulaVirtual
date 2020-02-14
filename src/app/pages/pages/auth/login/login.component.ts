@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import icVisibility from '@iconify/icons-ic/twotone-visibility';
 import icVisibilityOff from '@iconify/icons-ic/twotone-visibility-off';
 import { fadeInUp400ms } from '../../../../../@vex/animations/fade-in-up.animation';
+import { AuthenticationService } from '../../../../../../src/app/shared/authentication.service';
 
 @Component({
   selector: 'vex-login',
@@ -25,10 +26,16 @@ export class LoginComponent implements OnInit {
   icVisibility = icVisibility;
   icVisibilityOff = icVisibilityOff;
 
+  email: string;
+  password: string;
+
   constructor(private router: Router,
               private fb: FormBuilder,
               private cd: ChangeDetectorRef,
-              private snackbar: MatSnackBar
+              private snackbar: MatSnackBar,
+              //
+              public authenticationService: AuthenticationService
+              //
   ) {}
 
   ngOnInit() {
@@ -36,6 +43,22 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
+  }
+
+  signUp() {
+    this.authenticationService.SignUp(this.email, this.password);
+    this.email = ''; 
+    this.password = '';
+  }
+
+  signIn() {
+    this.email = ''; 
+    this.password = '';
+    this.router.navigate(['/']);
+  }
+
+  signOut() {
+    this.authenticationService.SignOut();
   }
 
   send() {
