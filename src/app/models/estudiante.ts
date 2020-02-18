@@ -1,6 +1,6 @@
 export class Estudiante {
-    idEstudiante:number;
-    /*nombreEstudiante:String;
+    idEstudiante:String;
+    nombreEstudiante:String;
     apellidoEstudiante:String;
     cedulaEstudiante:String;
     matriculaEstudiante:boolean;
@@ -10,12 +10,10 @@ export class Estudiante {
     telefonoEstudiante: String;
     correoEstudiante: String;
     activoEstudiante: boolean;
-    passwordEstudiante:String;*/
-
 
     constructor(estudiante){
         this.idEstudiante = estudiante.idEstudiante;
-        /*this.nombreEstudiante = estudiante.nombreEstudiante;
+        this.nombreEstudiante = estudiante.nombreEstudiante;
         this.apellidoEstudiante = estudiante.apellidoEstudiante;
         this.cedulaEstudiante = estudiante.cedulaEstudiante;
         this.matriculaEstudiante = estudiante.matriculaEstudiante;
@@ -25,8 +23,6 @@ export class Estudiante {
         this.telefonoEstudiante = estudiante.telefonoEstudiante;
         this.correoEstudiante = estudiante.correoEstudiante;
         this.activoEstudiante = estudiante.activoEstudiante;
-        this.passwordEstudiante = estudiante.passwordEstudiante;
-    */
     }
 
 }
