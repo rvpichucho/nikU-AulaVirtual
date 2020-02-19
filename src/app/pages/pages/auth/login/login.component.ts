@@ -6,6 +6,7 @@ import icVisibility from '@iconify/icons-ic/twotone-visibility';
 import icVisibilityOff from '@iconify/icons-ic/twotone-visibility-off';
 import { fadeInUp400ms } from '../../../../../@vex/animations/fade-in-up.animation';
 import { AuthenticationService } from '../../../../../../src/app/shared/authentication.service';
+import firebase from 'firebase';
 
 @Component({
   selector: 'vex-login',
@@ -45,17 +46,20 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  signUp() {
-    this.authenticationService.SignUp(this.email, this.password);
-    this.email = ''; 
-    this.password = '';
+  singIn(){
+    firebase.auth().signInWithEmailAndPassword(this.form.value.email, this.form.value.password).then(res => {
+      console.log('Ingreso bien!', res);
+      this.snackbar.open('Bienvenido', 'LOL THANKS', {
+        duration: 10000
+      });
+      this.router.navigate(['/']);
+    })
+    .catch(error => {
+      this.snackbar.open('Lo sentimos', error.message, {duration: 10000});
+    });
+    
   }
-
-  signIn() {
-    this.email = ''; 
-    this.password = '';
-    this.router.navigate(['/']);
-  }
+  
 
   signOut() {
     this.authenticationService.SignOut();
