@@ -6,13 +6,13 @@ export const environment = {
   production: false,
   firebaseConfig : {
     apiKey: "AIzaSyCJN33J1XXl5t37vi8Eyj9WIGWo4zT94Gs",
-    authDomain: "pracben1.firebaseapp.com",
-    databaseURL: "https://pracben1.firebaseio.com",
-    projectId: "pracben1",
-    storageBucket: "pracben1.appspot.com",
-    messagingSenderId: "1051311026044",
-    appId: "1:1051311026044:web:68750ad89cad58b4b93ef9",
-    measurementId: "G-JM17X6Q8FN"
+  authDomain: "pracben1.firebaseapp.com",
+  databaseURL: "https://pracben1.firebaseio.com",
+  projectId: "pracben1",
+  storageBucket: "pracben1.appspot.com",
+  messagingSenderId: "1051311026044",
+  appId: "1:1051311026044:web:68750ad89cad58b4b93ef9",
+  measurementId: "G-JM17X6Q8FN"
   }
 };
 

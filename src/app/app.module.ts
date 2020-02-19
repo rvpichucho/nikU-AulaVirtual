@@ -30,6 +30,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth'
     AngularFireAuthModule,
     // Vex
     VexModule,
+    //DocenteAppRoutingModule,
     //EstudianteAppRoutingModule
   ],
   providers: [],
