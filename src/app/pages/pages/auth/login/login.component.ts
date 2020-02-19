@@ -5,6 +5,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import icVisibility from '@iconify/icons-ic/twotone-visibility';
 import icVisibilityOff from '@iconify/icons-ic/twotone-visibility-off';
 import { fadeInUp400ms } from '../../../../../@vex/animations/fade-in-up.animation';
+import { AuthenticationService } from '../../../../../../src/app/shared/authentication.service';
+import firebase from 'firebase';
 
 @Component({
   selector: 'vex-login',
@@ -25,10 +27,16 @@ export class LoginComponent implements OnInit {
   icVisibility = icVisibility;
   icVisibilityOff = icVisibilityOff;
 
+  email: string;
+  password: string;
+
   constructor(private router: Router,
               private fb: FormBuilder,
               private cd: ChangeDetectorRef,
-              private snackbar: MatSnackBar
+              private snackbar: MatSnackBar,
+              //
+              public authenticationService: AuthenticationService
+              //
   ) {}
 
   ngOnInit() {
@@ -36,6 +44,25 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
+  }
+
+  singIn(){
+    firebase.auth().signInWithEmailAndPassword(this.form.value.email, this.form.value.password).then(res => {
+      console.log('Ingreso bien!', res);
+      this.snackbar.open('Bienvenido', 'LOL THANKS', {
+        duration: 10000
+      });
+      this.router.navigate(['/']);
+    })
+    .catch(error => {
+      this.snackbar.open('Lo sentimos', error.message, {duration: 10000});
+    });
+    
+  }
+  
+
+  signOut() {
+    this.authenticationService.SignOut();
   }
 
   send() {

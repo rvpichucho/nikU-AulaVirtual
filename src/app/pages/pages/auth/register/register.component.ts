@@ -4,6 +4,7 @@ import icVisibilityOff from '@iconify/icons-ic/twotone-visibility-off';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fadeInUp400ms } from '../../../../../@vex/animations/fade-in-up.animation';
+import firebase, { auth } from 'firebase';
 
 @Component({
   selector: 'vex-register',
@@ -14,6 +15,7 @@ import { fadeInUp400ms } from '../../../../../@vex/animations/fade-in-up.animati
   ]
 })
 export class RegisterComponent implements OnInit {
+  [x: string]: any;
 
   form: FormGroup;
 
@@ -36,6 +38,17 @@ export class RegisterComponent implements OnInit {
       passwordConfirm: ['', Validators.required],
     });
   }
+
+  registrarUsuario(){
+    firebase.auth().createUserWithEmailAndPassword(this.form.value.email, this.form.value.password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ...
+    });
+    this.router.navigate(['/']);
+ }
+
 
   send() {
     this.router.navigate(['/']);
