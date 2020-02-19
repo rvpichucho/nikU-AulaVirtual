@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EstudianteComponent } from './estudiante.component';
+import { EstudianteComponent,DialogComponent } from './estudiante.component';
 import { EstudianteAppRoutingModule} from './estudiante-app-routing.module';
+import { EstudianteService } from 'src/app/services/estudiante.service'
 //
 
 import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-layout.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
-//import { CustomerCreateUpdateModule } from './customer-create-update/customer-create-update.module';
+import { EstudianteCreateUpdateModule } from './estudiante-create-update/estudiante-create-update.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
@@ -22,21 +23,22 @@ import { ContainerModule } from '../../../../@vex/directives/container/container
 import { MatSelectModule } from '@angular/material/select';
 import { ColorFadeModule } from '../../../../@vex/pipes/color/color-fade.module';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
-  declarations: [EstudianteComponent],
+  declarations: [EstudianteComponent,DialogComponent],
   imports: [
     CommonModule,
     EstudianteAppRoutingModule,
-    
+    MatSnackBarModule,
     PageLayoutModule,
     FlexLayoutModule,
     BreadcrumbsModule,
-    //CustomerCreateUpdateModule,
+    EstudianteCreateUpdateModule,
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,
+    MatDialogModule,
     MatCheckboxModule,
     MatIconModule,
     MatButtonModule,
@@ -49,7 +51,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatSelectModule,
     ColorFadeModule,
     MatButtonToggleModule
-
-  ]
+  ],
+  entryComponents: [DialogComponent],
+  providers:[EstudianteService]
 })
 export class EstudianteModule { }

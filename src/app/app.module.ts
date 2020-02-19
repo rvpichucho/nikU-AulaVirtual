@@ -13,6 +13,7 @@ import { AngularFireModule} from '@angular/fire';
 //import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
+//import { DocenteAppRoutingModule } from './pages/apps/docente/docente-app-routing.module';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { environment } from 'src/environments/environment';
     FormsModule,
     // Vex
     VexModule,
+    //DocenteAppRoutingModule,
     //EstudianteAppRoutingModule
   ],
   providers: [],

@@ -126,6 +126,17 @@ export class AppComponent {
           },
           {
             type: 'link',
+            label: 'docente',
+            route: '/apps/docente',
+            icon: icChat,
+            badge: {
+              value: '16',
+              background: theme.colors.cyan['500'],
+              color: theme.textColor['cyan-contrast']['600']
+            },
+          },
+          {
+            type: 'link',
             label: 'All-In-One Table',
             route: '/apps/aio-table',
             icon: icAssigment

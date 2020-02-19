@@ -1,0 +1,103 @@
+<form (ngSubmit)="save()" [formGroup]="form">
+    <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+
+      <h2 *ngIf="form.get('idEstudiante').value" class="headline m-0" fxFlex="auto">Actualizar registro</h2>
+      <h2
+        *ngIf="!form.get('idEstudiante').value"
+        class="headline m-0"
+        fxFlex="auto"
+      >
+        Nuevo registro
+      </h2>
+
+      <button
+        class="text-secondary"
+        mat-dialog-close
+        mat-icon-button
+        type="button"
+      >
+        <mat-icon [icIcon]="icClose"></mat-icon>
+      </button>
+    </div>
+
+    <mat-divider class="-mx-6 text-border"></mat-divider>
+
+    <mat-dialog-content fxLayout="column">
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+        <mat-form-field class="mt-6" fxFlex>
+          <mat-label>Nombre</mat-label>
+          <input  type="text" formControlName="nombreEstudiante"    matInput>
+          <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+          
+        </mat-form-field>
+        <mat-form-field class="mt-6" fxFlex>
+          <mat-label>Apellido</mat-label>
+          <input  type="text" formControlName="apellidoEstudiante"   matInput>
+          <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+        </mat-form-field>
+        <mat-form-field class="mt-6" fxFlex>
+          <mat-label>Cédula</mat-label>
+          <input #lengthHint  type="text" formControlName="cedulaEstudiante" matInput maxlength="10" >
+            <mat-hint align="start">Ingrese no más de 10 números</mat-hint>
+            <mat-hint align="end">{{lengthHint.value.length}}/10</mat-hint>
+            <mat-icon [icIcon]="icCedula" class="mr-3" matPrefix></mat-icon>
+      </mat-form-field>
+      </div>
+      
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+        <mat-form-field class="mt-6" fxFlex>
+          <mat-label>Teléfono</mat-label>
+          <input #lengthHint maxlength="10" type="text" formControlName="telefonoEstudiante"  required matInput>
+          <mat-icon [icIcon]="icPhone" class="mr-3" matPrefix></mat-icon>
+      </mat-form-field> 
+        <mat-form-field class="mt-6" fxFlex>
+              <mat-label>Correo</mat-label>
+              <input type="email" formControlName="correoEstudiante" matInput required maxlength="50"  required >
+                 <mat-hint align="end">example@example.com</mat-hint>
+              <mat-icon [icIcon]="icMail" class="mr-3" matPrefix></mat-icon>
+          </mat-form-field>
+          <mat-form-field class="mt-6" fxFlex>
+              <mat-label>Región</mat-label>
+              <input cdkFocusInitial type="text" formControlName="regionEstudiante" required matInput>
+              <mat-icon [icIcon]="icCanton" class="mr-3" matPrefix></mat-icon>
+          </mat-form-field>
+          
+      </div>
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+        <mat-form-field class="mt-6" fxFlex>
+          <mat-label>Fecha de matrícula</mat-label>
+          <input  [matDatepicker]="datepickerRef" formControlName="fechaCurso" required matInput>
+          <mat-datepicker-toggle [for]="datepickerRef" class="block" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #datepickerRef></mat-datepicker>
+        </mat-form-field>
+        
+        <mat-form-field class="mt-6" fxFlex>
+          <mat-label>Estado de matrícula</mat-label>
+          <mat-select formControlName="matriculaEstudiante" matInput>
+            <mat-option *ngFor="let matricula of EstadoList" [value]="matricula.valor">{{matricula.mean}}</mat-option>
+          </mat-select>
+
+          <mat-icon [icIcon]="icCheck" class="mr-3" matPrefix></mat-icon>
+        </mat-form-field>
+        <mat-form-field class="mt-6" fxFlex>
+          <mat-label>Estudiante Activo</mat-label>
+          <mat-select formControlName="activoEstudiante" matInput>
+            <mat-option *ngFor="let activo of EstadoList" [value]="activo.valor">{{activo.mean}}</mat-option>
+          </mat-select>
+          <mat-icon [icIcon]="icCheck" class="mr-3" matPrefix></mat-icon>
+        </mat-form-field>
+      </div>
+    
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close type="button">CANCELAR</button>
+      <button  *ngIf="isCreateMode()" color="primary" mat-button type="submit">
+        GUARDAR <!--[disabled]="form.invalid"-->
+      </button>
+      <button   *ngIf="isUpdateMode()" color="primary" mat-button type="submit">
+        ACTUALIZAR
+      </button>
+    </mat-dialog-actions>
+  </form>
+
