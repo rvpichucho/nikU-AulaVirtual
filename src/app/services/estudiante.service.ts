@@ -42,7 +42,7 @@ export class EstudianteService {
     )*/
   }
   updateEstudiante(data){
-    return this.firestore.collection("estudiante").doc(data.id).set(data);
+    return this.firestore.collection("estudiante").doc(data.idEstudiante).set(data);
   }
   deleteEstudiante(data){
     return this.firestore.collection("estudiante").doc(data.id).delete();

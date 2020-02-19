@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 //
 import { DatePipe, DeprecatedDatePipe} from "@angular/common";  
 import { BrowserModule } from '@angular/platform-browser';
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup,Validators} from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Estudiante } from "src/app/models/estudiante";
 import icMoreVert from "@iconify/icons-ic/twotone-more-vert";
@@ -26,6 +26,12 @@ import icEditLocation from "@iconify/icons-ic/twotone-edit-location";
 import { Router } from '@angular/router';
 
 
+//
+import icCedula from '@iconify/icons-fa-solid/address-card';
+import icMail from '@iconify/icons-ic/twotone-mail';
+import icCanton from '@iconify/icons-fa-solid/image';
+import icNacimiento from '@iconify/icons-fa-solid/birthday-cake';
+import icCheck from '@iconify/icons-ic/twotone-check';
 
 @Component({
   selector: 'vex-estudiante-create-update',
@@ -44,12 +50,19 @@ export class EstudianteCreateUpdateComponent implements OnInit {
   icPrint = icPrint;
   icDownload = icDownload;
   icDelete = icDelete;
-
+//
   icPerson = icPerson;
+  icCedula = icCedula;
+  icCanton=icCanton;
+  icMail = icMail;
+  icNacimiento = icNacimiento;
+  icCheck = icCheck;
+  icPhone = icPhone;
+//
   icMyLocation = icMyLocation;
   icLocationCity = icLocationCity;
   icEditLocation = icEditLocation;
-  icPhone = icPhone;
+
   icTemperature = icTemperature;
   icLaptoMedical = icLaptoMedical;
   icFileMedical = icFileMedical;
@@ -58,12 +71,16 @@ export class EstudianteCreateUpdateComponent implements OnInit {
   icChild = icChild;
   icBalance = icBalance;
   icMale = icMale;
+  EstadoList = [
+    {valor: true , mean: 'Activo'},
+    {valor: false, mean: 'Inactivo'},
+  ]
 //
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: any,
     private dialogRef: MatDialogRef<EstudianteCreateUpdateComponent>,
     private fb: FormBuilder,
-    //public datapipe: DatePipe
+    public datapipe: DatePipe
   ) { }
 
   ngOnInit() {
@@ -75,18 +92,17 @@ export class EstudianteCreateUpdateComponent implements OnInit {
     }
     
     this.form = this.fb.group({
-      
-      idEstudiante:this.defaults.id||'',
-      nombreEstudiante:this.defaults.nombreEstudiante||'',
-      apellidoEstudiante:this.defaults.apellidoEstudiante||'',
-      cedulaEstudiante:this.defaults.cedulaEstudiante||'',
-      matriculaEstudiante:this.defaults.matriculaEstudiante||'',
-      regionEstudiante:this.defaults.regionEstudiante||'',
-      aprobadoExamen:this.defaults.aprobadoExamen||'',
-      fechaCurso:this.defaults.fechaCurso||'',
-      telefonoEstudiante:this.defaults.telefonoEstudiante||'',
-      correoEstudiante:this.defaults.correoEstudiante||'',
-      activoEstudiante:this.defaults.activoEstudiante||''
+      idEstudiante:this.defaults.id||"",
+      nombreEstudiante:[this.defaults.nombreEstudiante||"",Validators.required],
+      apellidoEstudiante:[this.defaults.apellidoEstudiante||"",Validators.required],
+      cedulaEstudiante:[this.defaults.cedulaEstudiante||"",Validators.required],
+      matriculaEstudiante:[this.defaults.matriculaEstudiante||"",Validators.required],
+      regionEstudiante:[this.defaults.regionEstudiante||"",Validators.required],
+      aprobadoExamen:[this.defaults.aprobadoExamen||"",Validators.required],
+      fechaCurso:[this.defaults.fechaCurso||"",Validators.required],
+      telefonoEstudiante:[this.defaults.telefonoEstudiante||"",Validators.required],
+      correoEstudiante:[this.defaults.correoEstudiante||"",Validators.required],
+      activoEstudiante:[this.defaults.activoEstudiante||"",Validators.required]
     }
     );
   }
@@ -99,8 +115,9 @@ export class EstudianteCreateUpdateComponent implements OnInit {
   }
   createEstudiante() {
     const estudiante = this.form.value;
-    //const fecha = this.datapipe.transform(this.date, 'yyyy-MM-dd');
-    //estudiante.fechaCurso = fecha;
+    const date = this.form.get('fechaCurso').value;
+    const fecha = this.datapipe.transform(date, 'yyyy-MM-dd');
+    estudiante.fechaCurso = fecha;
     this.dialogRef.close(estudiante);
   }
   

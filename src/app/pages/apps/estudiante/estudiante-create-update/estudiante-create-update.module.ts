@@ -15,8 +15,7 @@ import { IconModule } from "@visurel/iconify-angular";
 import { MatDividerModule } from "@angular/material/divider";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
-
-
+import { DatePipe } from "@angular/common";
 
 @NgModule({
   declarations: [EstudianteCreateUpdateComponent],
@@ -38,5 +37,6 @@ import {MatNativeDateModule} from "@angular/material/core";
   ],
   entryComponents: [EstudianteCreateUpdateComponent],
   exports: [EstudianteCreateUpdateComponent],
+  providers:[DatePipe]
 })
 export class EstudianteCreateUpdateModule { }

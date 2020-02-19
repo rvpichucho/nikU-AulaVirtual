@@ -30,6 +30,8 @@ import theme from '../../../../@vex/utils/tailwindcss';
 import icPhone from '@iconify/icons-ic/twotone-phone';
 import icMail from '@iconify/icons-ic/twotone-mail';
 import icMap from '@iconify/icons-ic/twotone-map';
+
+import icClose from '@iconify/icons-ic/twotone-close';  
 //
 import { ActivatedRoute, Router } from "@angular/router";
 //
@@ -62,11 +64,11 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
     { label: 'Nombre',property: 'nombreEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Apellido',property: 'apellidoEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Cédula',property: 'cedulaEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
-    { label: 'Estado matrícula',property: 'matriculaEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
-    { label: 'Región',property: 'regionEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
-    { label: 'Fecha del Curso',property: 'fechaCurso',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Telefono',property: 'telefonoEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Correo',property: 'correroEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
+    { label: 'Región',property: 'regionEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
+    { label: 'Fecha de matrícula',property: 'fechaCurso',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
+    { label: 'Estado matrícula',property: 'matriculaEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Activo',property: 'activoEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
@@ -82,7 +84,9 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
   icFilterList = icFilterList;
   icMoreHoriz = icMoreHoriz;
   icFolder = icFolder;
-  
+  //
+  matricula : Boolean;
+  imp: String;
   theme = theme;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -121,34 +125,45 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
       (data) => { // Success
         this.estudiante = data;
         this.dataSource.data = data;
+        //console.log(this.estudiante);
       },
       (err) => {
         console.error(err)
       }
     );
-
+    //this.actualizarMensajes();
     this.searchCtrl.valueChanges.pipe(
       untilDestroyed(this)
     ).subscribe(value => this.onFilterChange(value));
+   
   }
-  
+  mensaje(){
+
+  }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
+  /*actualizarMensajes(){
+    for (let e of this.estudiante){
+      this.matricula = e.matriculaEstudiante;
+      if(this.matricula==true){
+        this.imp='Activo';
+      }else{
+        this.imp='Inactivo';
+      }
+    }
+    
+  }*/
   createEstudiante() {
     this.dialog.open(EstudianteCreateUpdateComponent).afterClosed().subscribe((estudiante: Estudiante) => {
       if (estudiante) {
-        
-        this.estudianteService.createEstudiante(estudiante).then(data => {
-          this.estudiante.unshift(new Estudiante(data))
-          this.dataSource.connect().next(this.estudiante);
+        this.estudianteService.createEstudiante(estudiante).then(
+          (data)=>{
           this.showNotification('Estudiante creado EXITOSAMENTE', 'OK')
         },
         (err) => {
           this.showNotification('ERROR al crear estudiante', 'CERRAR')
-          console.error(err)
         });
         }
     });
@@ -157,19 +172,16 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
     let tamaño = estudiante.length
     let promise = new Promise((resolve, reject) => {
       estudiante.forEach(estudio => {       
-      console.log(estudiante);
+    
       this.estudianteService.deleteEstudiante(estudio)
-         /* .subscribe(
+          .then(
             (data) => { // Success
-              this.signos.splice(this.signos.findIndex((existingSigno) => existingSigno.idSignoVital === id), 1);
-              this.selection.deselect(data);
-              this.dataSource.connect().next(this.signos);
+              this.showNotification('Estudiante eliminado correctamente', 'CERRAR')
             },
             (err) => {
               this.showNotification('A ocurrido un ERROR', 'CERRAR')
-              console.error(err);
             }
-          ); */
+          ); 
       })
       
       resolve()
@@ -190,20 +202,17 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
     }).afterClosed().subscribe(updateEstudiante => {
       if (updateEstudiante) {
         
-        this.estudianteService.updateEstudiante(updateEstudiante);
-          /*.subscribe(
+        this.estudianteService.updateEstudiante(updateEstudiante)
+          .then(
             (data) => { // Success
-              const index = this.signos.findIndex((existingEstudio) => existingEstudio.idSignoVital === id);
-              this.signos[index] = new signosVitales(data);
-              this.dataSource.connect().next(this.signos);
-              this.showNotification('Signos Vitales actualizado EXITOSAMENTE', 'OK')
+              this.showNotification('Estudiante actualizado EXITOSAMENTE', 'OK')
             },
             (err) => {
-              this.showNotification('ERROR al actualizar Signos Vitales', 'CERRAR')
-              console.error(err)
+              this.showNotification('ERROR al actualizar al estudiante', 'CERRAR')
+              
             }
           );
-          */
+          
       }
     });
   
@@ -269,7 +278,7 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
 })
 export class DialogComponent {
 
-  //icClose = icClose;
+  icClose = icClose;
   message: string;
 
   constructor(@Inject(MAT_DIALOG_DATA) public defaults: any, 
