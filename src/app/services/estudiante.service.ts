@@ -13,7 +13,6 @@ import { FormControl, FormGroup } from "@angular/forms";
 })
 export class EstudianteService {
  
-  lastChanged = { $key: '', $type: '' };
   constructor(public firestore : AngularFirestore) {
     
    }

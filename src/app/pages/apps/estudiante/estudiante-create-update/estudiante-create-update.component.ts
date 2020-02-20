@@ -7,25 +7,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Estudiante } from "src/app/models/estudiante";
 import icMoreVert from "@iconify/icons-ic/twotone-more-vert";
 import icClose from "@iconify/icons-ic/twotone-close";
-import icPrint from "@iconify/icons-ic/twotone-print";
-import icDownload from "@iconify/icons-ic/twotone-cloud-download";
 import icDelete from "@iconify/icons-ic/twotone-delete";
 import icPhone from "@iconify/icons-ic/twotone-phone";
 import icPerson from "@iconify/icons-ic/twotone-person";
-import icTemperature from "@iconify/icons-fa-solid/temperature-high";
-import icLaptoMedical from "@iconify/icons-fa-solid/laptop-medical";
-import icWeight from "@iconify/icons-fa-solid/weight";
-import icFileMedical from "@iconify/icons-fa-solid/file-medical-alt";
-import icMaletinMedical from "@iconify/icons-fa-solid/briefcase-medical";
-import icChild from "@iconify/icons-fa-solid/child";
-import icMale from "@iconify/icons-fa-solid/male";
-import icBalance from "@iconify/icons-fa-solid/balance-scale";
-import icMyLocation from "@iconify/icons-ic/twotone-my-location";
-import icLocationCity from "@iconify/icons-ic/twotone-location-city";
-import icEditLocation from "@iconify/icons-ic/twotone-edit-location";
 import { Router } from '@angular/router';
-
-
 //
 import icCedula from '@iconify/icons-fa-solid/address-card';
 import icMail from '@iconify/icons-ic/twotone-mail';
@@ -47,8 +32,7 @@ export class EstudianteCreateUpdateComponent implements OnInit {
   icMoreVert = icMoreVert;
   icClose = icClose;
 
-  icPrint = icPrint;
-  icDownload = icDownload;
+ 
   icDelete = icDelete;
 //
   icPerson = icPerson;
@@ -59,18 +43,8 @@ export class EstudianteCreateUpdateComponent implements OnInit {
   icCheck = icCheck;
   icPhone = icPhone;
 //
-  icMyLocation = icMyLocation;
-  icLocationCity = icLocationCity;
-  icEditLocation = icEditLocation;
 
-  icTemperature = icTemperature;
-  icLaptoMedical = icLaptoMedical;
-  icFileMedical = icFileMedical;
-  icMaletinMedical = icMaletinMedical;
-  icWeight = icWeight;
-  icChild = icChild;
-  icBalance = icBalance;
-  icMale = icMale;
+  
   EstadoList = [
     {valor: true , mean: 'Activo'},
     {valor: false, mean: 'Inactivo'},

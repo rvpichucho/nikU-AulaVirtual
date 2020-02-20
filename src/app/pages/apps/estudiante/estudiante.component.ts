@@ -27,9 +27,6 @@ import { FormControl } from '@angular/forms';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { MatSelectChange } from '@angular/material/select';
 import theme from '../../../../@vex/utils/tailwindcss';
-import icPhone from '@iconify/icons-ic/twotone-phone';
-import icMail from '@iconify/icons-ic/twotone-mail';
-import icMap from '@iconify/icons-ic/twotone-map';
 
 import icClose from '@iconify/icons-ic/twotone-close';  
 //
@@ -65,7 +62,7 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
     { label: 'Apellido',property: 'apellidoEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Cédula',property: 'cedulaEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Telefono',property: 'telefonoEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
-    { label: 'Correo',property: 'correroEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
+    { label: 'Correo',property: 'correoEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Región',property: 'regionEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Fecha de matrícula',property: 'fechaCurso',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Estado matrícula',property: 'matriculaEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
