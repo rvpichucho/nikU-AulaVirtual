@@ -94,15 +94,22 @@
           <!-- Text Columns -->
           <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
             <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-            
               <th  *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
               <td  *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] }}</td>
-            
             </ng-container>
+<!--
+            <ng-container *ngIf="column.property === 'matriculaEstudiante'" [matColumnDef]="column.property">
+              <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
+              <td *matCellDef="let row" [ngClass]="column.cssClasses" class="w-5" mat-cell>
+                <mat-checkbox (click)="$event.stopPropagation()" [checked]="row[column.property]" disabled="true"
+                              color="primary">
+                </mat-checkbox>
+                && column.property !== 'matriculaEstudiante' 
+              </td>
+            </ng-container>
+            -->
           </ng-container>
-  
-          
-          <!-- Action Column -->
+            <!-- Action Column -->
           <ng-container matColumnDef="actions">
             <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
             <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>

@@ -16,7 +16,7 @@ import { MatDividerModule } from "@angular/material/divider";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import { DatePipe } from "@angular/common";
-
+import {MatCheckboxModule} from '@angular/material/checkbox'
 @NgModule({
   declarations: [EstudianteCreateUpdateComponent],
   imports: [
@@ -26,6 +26,7 @@ import { DatePipe } from "@angular/common";
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
+    MatCheckboxModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,

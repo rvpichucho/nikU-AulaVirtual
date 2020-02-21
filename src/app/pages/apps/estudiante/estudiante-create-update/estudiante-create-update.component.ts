@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 //
+import {MatCheckboxModule} from '@angular/material/checkbox'
 import { DatePipe, DeprecatedDatePipe} from "@angular/common";  
 import { BrowserModule } from '@angular/platform-browser';
 import { FormBuilder, FormGroup,Validators} from "@angular/forms";
@@ -43,12 +44,11 @@ export class EstudianteCreateUpdateComponent implements OnInit {
   icCheck = icCheck;
   icPhone = icPhone;
 //
-
-  
-  EstadoList = [
-    {valor: true , mean: 'Activo'},
-    {valor: false, mean: 'Inactivo'},
-  ]
+  EstadoList= [
+  {valor: true , mean: 'Activo'},
+  {valor: false , mean: 'Inactivo'}
+]
+ estado:boolean;
 //
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: any,
@@ -60,6 +60,7 @@ export class EstudianteCreateUpdateComponent implements OnInit {
   ngOnInit() {
     if (this.defaults) {
       this.mode = "update";
+      console.log(this.defaults);
     } else {
       this.date.setDate(this.date.getDate());
       this.defaults = {} as Estudiante;
@@ -70,13 +71,13 @@ export class EstudianteCreateUpdateComponent implements OnInit {
       nombreEstudiante:[this.defaults.nombreEstudiante||"",Validators.required],
       apellidoEstudiante:[this.defaults.apellidoEstudiante||"",Validators.required],
       cedulaEstudiante:[this.defaults.cedulaEstudiante||"",Validators.required],
-      matriculaEstudiante:[this.defaults.matriculaEstudiante||"",Validators.required],
+      matriculaEstudiante:this.defaults.matriculaEstudiante||"",
       regionEstudiante:[this.defaults.regionEstudiante||"",Validators.required],
       aprobadoExamen:[this.defaults.aprobadoExamen||"",Validators.required],
       fechaCurso:[this.defaults.fechaCurso||"",Validators.required],
       telefonoEstudiante:[this.defaults.telefonoEstudiante||"",Validators.required],
       correoEstudiante:[this.defaults.correoEstudiante||"",Validators.required],
-      activoEstudiante:[this.defaults.activoEstudiante||"",Validators.required]
+      activoEstudiante:this.defaults.activoEstudiante||""
     }
     );
   }
@@ -89,6 +90,12 @@ export class EstudianteCreateUpdateComponent implements OnInit {
   }
   createEstudiante() {
     const estudiante = this.form.value;
+    if(!estudiante.matriculaEstudiante.estado){
+      estudiante.matriculaEstudiante =false;
+    }
+    if(!estudiante.activoEstudiante){
+      estudiante.activoEstudiante = false;
+    }
     const date = this.form.get('fechaCurso').value;
     const fecha = this.datapipe.transform(date, 'yyyy-MM-dd');
     estudiante.fechaCurso = fecha;
@@ -97,6 +104,15 @@ export class EstudianteCreateUpdateComponent implements OnInit {
   
   updateEstudiante() {
     const estudiante = this.form.value;
+    if(!estudiante.matriculaEstudiante.estado){
+      estudiante.matriculaEstudiante =false;
+    }
+    if(!estudiante.activoEstudiante){
+      estudiante.activoEstudiante = false;
+    }
+    const date = this.form.get('fechaCurso').value;
+    const fecha = this.datapipe.transform(date, 'yyyy-MM-dd');
+    estudiante.fechaCurso = fecha;
     this.dialogRef.close(estudiante);
   }
   isCreateMode() {
