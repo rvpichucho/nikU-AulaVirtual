@@ -13,14 +13,13 @@ import { FormControl, FormGroup } from "@angular/forms";
 })
 export class EstudianteService {
  
-  lastChanged = { $key: '', $type: '' };
   constructor(public firestore : AngularFirestore) {
     
    }
    
    createEstudiante(data)
    {
-    return new Promise<any>((resolve, reject) =>{
+    return new Promise((resolve, reject) =>{
       this.firestore
           .collection("estudiante")
           .add(data)

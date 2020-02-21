@@ -27,10 +27,7 @@ import { FormControl } from '@angular/forms';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { MatSelectChange } from '@angular/material/select';
 import theme from '../../../../@vex/utils/tailwindcss';
-import icPhone from '@iconify/icons-ic/twotone-phone';
-import icMail from '@iconify/icons-ic/twotone-mail';
-import icMap from '@iconify/icons-ic/twotone-map';
-
+//
 import icClose from '@iconify/icons-ic/twotone-close';  
 //
 import { ActivatedRoute, Router } from "@angular/router";
@@ -65,13 +62,14 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
     { label: 'Apellido',property: 'apellidoEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Cédula',property: 'cedulaEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Telefono',property: 'telefonoEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
-    { label: 'Correo',property: 'correroEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
+    { label: 'Correo',property: 'correoEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Región',property: 'regionEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
-    { label: 'Fecha de matrícula',property: 'fechaCurso',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
+    { label: 'Fecha de matrícula',property: 'fechaCurso', type: 'text', visible: true,cssClasses: ['text-secondary'] }, 
     { label: 'Estado matrícula',property: 'matriculaEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Activo',property: 'activoEstudiante',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
+ 
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 20, 50];
   dataSource: MatTableDataSource<Estudiante> | null;
@@ -85,12 +83,12 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
   icMoreHoriz = icMoreHoriz;
   icFolder = icFolder;
   //
-  matricula : Boolean;
-  imp: String;
   theme = theme;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+
+  //return value ? "Activo" : "Inactivo";
   constructor( 
     private snackbar: MatSnackBar,
     private dialog: MatDialog,
@@ -124,37 +122,32 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
     this.estudianteService.getEstudiante().subscribe(
       (data) => { // Success
         this.estudiante = data;
+        
+        //
+        this.cambiarBoolean();
         this.dataSource.data = data;
-        //console.log(this.estudiante);
       },
       (err) => {
         console.error(err)
       }
     );
-    //this.actualizarMensajes();
     this.searchCtrl.valueChanges.pipe(
       untilDestroyed(this)
     ).subscribe(value => this.onFilterChange(value));
    
   }
-  mensaje(){
-
-  }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  /*actualizarMensajes(){
+  cambiarBoolean(){
     for (let e of this.estudiante){
-      this.matricula = e.matriculaEstudiante;
-      if(this.matricula==true){
-        this.imp='Activo';
-      }else{
-        this.imp='Inactivo';
-      }
-    }
-    
-  }*/
+      
+    } 
+  }
+  
+
+
   createEstudiante() {
     this.dialog.open(EstudianteCreateUpdateComponent).afterClosed().subscribe((estudiante: Estudiante) => {
       if (estudiante) {
@@ -172,7 +165,6 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
     let tamaño = estudiante.length
     let promise = new Promise((resolve, reject) => {
       estudiante.forEach(estudio => {       
-    
       this.estudianteService.deleteEstudiante(estudio)
           .then(
             (data) => { // Success
@@ -200,8 +192,8 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
     this.dialog.open(EstudianteCreateUpdateComponent, {
       data: estudiante,
     }).afterClosed().subscribe(updateEstudiante => {
-      if (updateEstudiante) {
-        
+      if (updateEstudiante) {  
+          
         this.estudianteService.updateEstudiante(updateEstudiante)
           .then(
             (data) => { // Success
@@ -209,7 +201,6 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
             },
             (err) => {
               this.showNotification('ERROR al actualizar al estudiante', 'CERRAR')
-              
             }
           );
           
@@ -217,7 +208,6 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
     });
   
   }
-
   onFilterChange(value: string) {
     if (!this.dataSource) {
       return;
@@ -276,6 +266,7 @@ export class EstudianteComponent implements OnInit,AfterViewInit,OnDestroy {
       </mat-dialog-actions>
   `
 })
+
 export class DialogComponent {
 
   icClose = icClose;

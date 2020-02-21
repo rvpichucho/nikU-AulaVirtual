@@ -1,1 +1,65 @@
-<p>docente-create-update works!</p>
+<form (ngSubmit)="save()" [formGroup]="form">
+    <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+
+      <h2 *ngIf="form.get('idDocente').value" class="headline m-0" fxFlex="auto">Actualizar registro</h2>
+      <h2
+        *ngIf="!form.get('idDocente').value"
+        class="headline m-0"
+        fxFlex="auto"
+      >
+        Nuevo registro
+      </h2>
+
+      <button
+        class="text-secondary"
+        mat-dialog-close
+        mat-icon-button
+        type="button"
+      >
+        <mat-icon [icIcon]="icClose"></mat-icon>
+      </button>
+    </div>
+
+    <mat-divider class="-mx-6 text-border"></mat-divider>
+
+    <mat-dialog-content fxLayout="column">
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+        <mat-form-field class="mt-6" fxFlex>
+          <mat-label>Nombre</mat-label>
+          <input  type="text" formControlName="nombreDocente"    matInput>
+          <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+          
+        </mat-form-field>
+        <mat-form-field class="mt-6" fxFlex>
+          <mat-label>Apellido</mat-label>
+          <input  type="text" formControlName="apellidoDocente"   matInput>
+          <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+        <mat-form-field class="mt-6" fxFlex>
+          <mat-label>Teléfono</mat-label>
+          <input #lengthHint maxlength="10" type="text" formControlName="telefonoDocente"  required matInput>
+          <mat-icon [icIcon]="icPhone" class="mr-3" matPrefix></mat-icon>
+      </mat-form-field> 
+        <mat-form-field class="mt-6" fxFlex>
+              <mat-label>Correo</mat-label>
+              <input type="email" formControlName="correoDocente" matInput required maxlength="50"  required >
+                 <mat-hint align="end">example@example.com</mat-hint>
+              <mat-icon [icIcon]="icMail" class="mr-3" matPrefix></mat-icon>
+          </mat-form-field>          
+      </div>
+     
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close type="button">CANCELAR</button>
+      <button  *ngIf="isCreateMode()" color="primary" mat-button type="submit">
+        GUARDAR <!--[disabled]="form.invalid"-->
+      </button>
+      <button   *ngIf="isUpdateMode()" color="primary" mat-button type="submit">
+        ACTUALIZAR
+      </button>
+    </mat-dialog-actions>
+  </form>
+

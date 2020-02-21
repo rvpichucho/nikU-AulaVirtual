@@ -16,13 +16,13 @@ export class Estudiante {
         this.nombreEstudiante = estudiante.nombreEstudiante;
         this.apellidoEstudiante = estudiante.apellidoEstudiante;
         this.cedulaEstudiante = estudiante.cedulaEstudiante;
-        this.matriculaEstudiante = false;
+        this.matriculaEstudiante = estudiante.matriculaEstudiante;
         this.regionEstudiante = estudiante.regionEstudiante;
         this.aprobadoExamen = estudiante.aprobadoExamen;
         this.fechaCurso = estudiante.fechaCurso;
         this.telefonoEstudiante = estudiante.telefonoEstudiante;
         this.correoEstudiante = estudiante.correoEstudiante;
-        this.activoEstudiante = false;
+        this.activoEstudiante = estudiante.activoEstudiante;
     }
 
 }

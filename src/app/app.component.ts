@@ -39,7 +39,6 @@ import icChromeReaderMode from '@iconify/icons-ic/twotone-chrome-reader-mode';
 import { AngularFirestore} from '@angular/fire/firestore';
 import { Observable} from 'rxjs';
 //
-import { Estudiante } from 'src/app/models/estudiante';
 
 
 @Component({
@@ -49,11 +48,6 @@ import { Estudiante } from 'src/app/models/estudiante';
 })
 export class AppComponent {
   title = 'vex';
-  itemValue = '';
-  items: Observable<any[]>;
-
-  estudiante: Estudiante;
-
   constructor(
               //
                 public db : AngularFirestore,
@@ -70,14 +64,6 @@ export class AppComponent {
               private navigationService: NavigationService,
               private splashScreenService: SplashScreenService) {
 
-                //this.items = db.collection('estudiante').valueChanges();
-                //this.itemValue='hola si funciona';
-                /*this.estudiante = new Estudiante(this.itemValue);    
-                this.estudiante.idEstudiante= 2;
-                console.log(this.estudiante);
-
-                this.db.collection('estudiante').doc(db.createId()).set(Object.assign({}, this.estudiante));
-                */
     this.iconRegistry.setDefaultFontSetClass('iconify');
     Settings.defaultLocale = this.localeId;
 

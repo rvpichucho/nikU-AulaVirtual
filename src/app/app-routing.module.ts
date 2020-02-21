@@ -22,7 +22,7 @@ const childrenRoutes: VexRoutes = [
       },
       {
         path: 'docente',
-        loadChildren:() => import('./pages/apps/docente/docente.module').then(m => m.DocenteModule)
+        loadChildren:() => import('./pages/apps/docente/docente.module').then(m=>m.DocenteModule)
       },
       {
         path: 'chat',

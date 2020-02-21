@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 //
+import {MatCheckboxModule} from '@angular/material/checkbox'
 import { DatePipe, DeprecatedDatePipe} from "@angular/common";  
 import { BrowserModule } from '@angular/platform-browser';
 import { FormBuilder, FormGroup,Validators} from "@angular/forms";
@@ -7,25 +8,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Estudiante } from "src/app/models/estudiante";
 import icMoreVert from "@iconify/icons-ic/twotone-more-vert";
 import icClose from "@iconify/icons-ic/twotone-close";
-import icPrint from "@iconify/icons-ic/twotone-print";
-import icDownload from "@iconify/icons-ic/twotone-cloud-download";
 import icDelete from "@iconify/icons-ic/twotone-delete";
 import icPhone from "@iconify/icons-ic/twotone-phone";
 import icPerson from "@iconify/icons-ic/twotone-person";
-import icTemperature from "@iconify/icons-fa-solid/temperature-high";
-import icLaptoMedical from "@iconify/icons-fa-solid/laptop-medical";
-import icWeight from "@iconify/icons-fa-solid/weight";
-import icFileMedical from "@iconify/icons-fa-solid/file-medical-alt";
-import icMaletinMedical from "@iconify/icons-fa-solid/briefcase-medical";
-import icChild from "@iconify/icons-fa-solid/child";
-import icMale from "@iconify/icons-fa-solid/male";
-import icBalance from "@iconify/icons-fa-solid/balance-scale";
-import icMyLocation from "@iconify/icons-ic/twotone-my-location";
-import icLocationCity from "@iconify/icons-ic/twotone-location-city";
-import icEditLocation from "@iconify/icons-ic/twotone-edit-location";
 import { Router } from '@angular/router';
-
-
 //
 import icCedula from '@iconify/icons-fa-solid/address-card';
 import icMail from '@iconify/icons-ic/twotone-mail';
@@ -47,8 +33,7 @@ export class EstudianteCreateUpdateComponent implements OnInit {
   icMoreVert = icMoreVert;
   icClose = icClose;
 
-  icPrint = icPrint;
-  icDownload = icDownload;
+ 
   icDelete = icDelete;
 //
   icPerson = icPerson;
@@ -59,22 +44,11 @@ export class EstudianteCreateUpdateComponent implements OnInit {
   icCheck = icCheck;
   icPhone = icPhone;
 //
-  icMyLocation = icMyLocation;
-  icLocationCity = icLocationCity;
-  icEditLocation = icEditLocation;
-
-  icTemperature = icTemperature;
-  icLaptoMedical = icLaptoMedical;
-  icFileMedical = icFileMedical;
-  icMaletinMedical = icMaletinMedical;
-  icWeight = icWeight;
-  icChild = icChild;
-  icBalance = icBalance;
-  icMale = icMale;
-  EstadoList = [
-    {valor: true , mean: 'Activo'},
-    {valor: false, mean: 'Inactivo'},
-  ]
+  EstadoList= [
+  {valor: true , mean: 'Activo'},
+  {valor: false , mean: 'Inactivo'}
+]
+ estado:boolean;
 //
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: any,
@@ -86,6 +60,7 @@ export class EstudianteCreateUpdateComponent implements OnInit {
   ngOnInit() {
     if (this.defaults) {
       this.mode = "update";
+      console.log(this.defaults);
     } else {
       this.date.setDate(this.date.getDate());
       this.defaults = {} as Estudiante;
@@ -96,13 +71,13 @@ export class EstudianteCreateUpdateComponent implements OnInit {
       nombreEstudiante:[this.defaults.nombreEstudiante||"",Validators.required],
       apellidoEstudiante:[this.defaults.apellidoEstudiante||"",Validators.required],
       cedulaEstudiante:[this.defaults.cedulaEstudiante||"",Validators.required],
-      matriculaEstudiante:[this.defaults.matriculaEstudiante||"",Validators.required],
+      matriculaEstudiante:this.defaults.matriculaEstudiante||"",
       regionEstudiante:[this.defaults.regionEstudiante||"",Validators.required],
       aprobadoExamen:[this.defaults.aprobadoExamen||"",Validators.required],
       fechaCurso:[this.defaults.fechaCurso||"",Validators.required],
       telefonoEstudiante:[this.defaults.telefonoEstudiante||"",Validators.required],
       correoEstudiante:[this.defaults.correoEstudiante||"",Validators.required],
-      activoEstudiante:[this.defaults.activoEstudiante||"",Validators.required]
+      activoEstudiante:this.defaults.activoEstudiante||""
     }
     );
   }
@@ -115,6 +90,12 @@ export class EstudianteCreateUpdateComponent implements OnInit {
   }
   createEstudiante() {
     const estudiante = this.form.value;
+    if(!estudiante.matriculaEstudiante.estado){
+      estudiante.matriculaEstudiante =false;
+    }
+    if(!estudiante.activoEstudiante){
+      estudiante.activoEstudiante = false;
+    }
     const date = this.form.get('fechaCurso').value;
     const fecha = this.datapipe.transform(date, 'yyyy-MM-dd');
     estudiante.fechaCurso = fecha;
@@ -123,6 +104,15 @@ export class EstudianteCreateUpdateComponent implements OnInit {
   
   updateEstudiante() {
     const estudiante = this.form.value;
+    if(!estudiante.matriculaEstudiante.estado){
+      estudiante.matriculaEstudiante =false;
+    }
+    if(!estudiante.activoEstudiante){
+      estudiante.activoEstudiante = false;
+    }
+    const date = this.form.get('fechaCurso').value;
+    const fecha = this.datapipe.transform(date, 'yyyy-MM-dd');
+    estudiante.fechaCurso = fecha;
     this.dialogRef.close(estudiante);
   }
   isCreateMode() {
