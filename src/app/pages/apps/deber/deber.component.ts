@@ -27,12 +27,13 @@ export class DeberComponent implements OnInit {
   toggleHover(event: boolean) {
     this.isHovering = event;
   }
+  files: File[] = [];
+ 
 
   constructor(private storage: AngularFireStorage,private db: AngularFirestore) { }
   ngOnInit() {}
-  startUpload(event : FileList ) {
-    const file= event.item(0);
-
+  startUpload(event : File[]) {
+    const file= event[0];
     if(file.type.split('/')[0] !=='image'){
       console.error('archivo no valido');
     }
@@ -46,8 +47,7 @@ export class DeberComponent implements OnInit {
       // The file's download URL
       finalize( async() =>  {
         this.downloadURL = await ref.getDownloadURL().toPromise();
-
-        this.db.collection('files').add( { downloadURL: this.downloadURL, path });
+        //this.db.collection('files').add( { downloadURL: this.downloadURL, path });
       }),
     );
   }
@@ -55,4 +55,14 @@ export class DeberComponent implements OnInit {
     return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
   }
   
+  onSelect(event) {
+    console.log(event);
+    this.files.push(...event.addedFiles);
+    this.startUpload(this.files);
+  }
+   
+  onRemove(event) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+  }
 }

@@ -1,4 +1,4 @@
-import { Directive, HostListener, Output, EventEmitter } from '@angular/core';
+import { Directive, HostListener, Output, EventEmitter} from '@angular/core';
 
 @Directive({
   selector: '[vexDropzone]'

@@ -13,7 +13,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { DropzoneDirective } from './dropzone.directive';
+//import { DropzoneDirective } from './dropzone.directive';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 //
 /////////////////////////////
 
@@ -21,7 +22,7 @@ import { DropzoneDirective } from './dropzone.directive';
 
 
 @NgModule({
-  declarations: [AppComponent, DropzoneDirective],
+declarations: [AppComponent, /*DropzoneDirective*/],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,6 +34,7 @@ import { DropzoneDirective } from './dropzone.directive';
     FormsModule,
     AngularFireAuthModule,
     VexModule,
+    NgxDropzoneModule
   ],
   providers: [],
   bootstrap: [AppComponent]
