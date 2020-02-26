@@ -2,9 +2,8 @@ export class Deber {
     idDeber:String;
     nombreDeber:String;
     descripcionDeber:String;
-    detalleDeber: Bits;
+    detalleDeber: File;
     calificaionDeber: number;
-
     constructor(deber){
         this.idDeber = deber.idDeber;
         this.nombreDeber = deber.nombreDeber;
