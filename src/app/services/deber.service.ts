@@ -46,12 +46,16 @@ export class DeberService {
       catchError(this.errorHandl)
     )*/
   }
-
   updateDeber(data){
-    //return this.firestore.collection("docente").doc(data.idDocente).set(data);
+    data.detalleDeber=null;
+    console.log(data);
+    return this.firestore.collection("deber").doc(data.idDeber).set(data);
   }
   deleteDeber(data){
-    //return this.firestore.collection("docente").doc(data.id).delete();
+    var storageRef = this.storage.ref(data.path);
+    console.log(data.path);
+    storageRef.delete();
+    return this.firestore.collection("deber").doc(data.id).delete();
   }
   getbyID(id: string){
     

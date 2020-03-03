@@ -16,7 +16,7 @@ import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'vex-upload-task',
   templateUrl: './upload-task.component.html',
@@ -36,15 +36,17 @@ export class UploadTaskComponent implements OnInit {
   task: AngularFireUploadTask;
   percentage: Observable<number>;
   snapshot: Observable<any>;
-  downloadURL : Observable<String>;
+  download : string;
   //
   files: File[] = [];
   path : string;
   isHovering: boolean;
+  //
   toggleHover(event: boolean) {
     this.isHovering = event;
   }
   constructor(@Inject(MAT_DIALOG_DATA) public defaults: any,
+  private snackbar: MatSnackBar,
   private dialogRef: MatDialogRef<UploadTaskComponent>,
   private fb: FormBuilder,
   private storage: AngularFireStorage,private db: AngularFirestore) { }
@@ -52,6 +54,9 @@ export class UploadTaskComponent implements OnInit {
   ngOnInit() {
     if (this.defaults) {
       this.mode = "update";
+      this.download = this.defaults.downloadURL;
+      this.path = this.defaults.path;
+      this.cargarArchivo();
     } else {
       this.defaults = {} as Deber;
     }
@@ -65,8 +70,23 @@ export class UploadTaskComponent implements OnInit {
       detalleDeber: [[this.defaults.detalleDeber]||"",Validators.required],
     }
     );
-    
+    console.log(this.defaults);
   }
+  cargarArchivo(){
+    var storageRef = this.storage.ref(this.path);
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'blob';
+    console.log("assssssssssssssssssssssssssssss");
+    console.log(this.download);
+
+      xhr.onload = function(event) {
+        var blob = xhr.response;
+      };
+      xhr.open('GET', this.download);
+      xhr.send();
+      // Or inserted into an <img> element:
+  }
+
   save() {
     if (this.mode === "create") {
       this.createDeber();
@@ -76,13 +96,19 @@ export class UploadTaskComponent implements OnInit {
   }
   createDeber() {
     const deber = this.form.value;
-    deber.downloadURL = this.downloadURL;
+    deber.downloadURL = this.download;
     deber.path = this.path
-    console.log(deber);
     this.dialogRef.close(deber);
   }
   updateDeber() {
     const deber = this.form.value;
+    if(this.files[0] != null){ 
+      deber.downloadURL = this.download;
+      deber.path = this.path
+    }
+    else{
+
+    }
     this.dialogRef.close(deber);
   }
   isCreateMode() {
@@ -93,36 +119,43 @@ export class UploadTaskComponent implements OnInit {
   }
   validarVacio(){
     if(this.files[0] != null){ 
-      console.log('vacuin');
       var storageRef = this.storage.ref(this.path);
       storageRef.delete();
     }
   }
   onSelect(event) {
-    //console.log(event);
     this.files.push(...event.addedFiles);
     const file= this.files[0];
-    if(file.type.split('/')[0] !=='image'){
-      console.error('archivo no valido');
+    if(file.type.split('/')[0] !=='application'){
+      this.showNotification('Archivo no válido, solo PDF', 'OK');
+      this.onRemove(this.files);
     }
-    this.path = `deber/${new Date().getTime()}_{file.name}`;  
-    const ref = this.storage.ref(this.path);
-    this.task = this.storage.upload(this.path,file);
-    this.percentage = this.task.percentageChanges();
-    this.snapshot   = this.task.snapshotChanges();
-    this.snapshot   = this.task.snapshotChanges().pipe(
-    tap(console.log),
-    // The file's download URL
-    finalize( async() =>  {
-      this.downloadURL = await ref.getDownloadURL().toPromise();
-      //this.db.collection('deber').add( { downloadURL: this.downloadURL, path });
-    }),
-    );
+    else{
+      this.path = `deber/${new Date().getTime()}_{file.name}`;  
+      const ref = this.storage.ref(this.path);
+      this.task = this.storage.upload(this.path,file);
+      this.percentage = this.task.percentageChanges();
+      this.snapshot   = this.task.snapshotChanges();
+      this.snapshot   = this.task.snapshotChanges().pipe(
+      // The file's download URL
+      finalize( async() =>  {
+        this.download = await ref.getDownloadURL().toPromise();
+        //this.db.collection('deber').add( { downloadURL: this.downloadURL, path });
+      }),
+      );
+    }
   }
   onRemove(event) {
     this.files.splice(this.files.indexOf(event), 1);
+    var storageRef = this.storage.ref(this.path);
+    storageRef.delete();
   }
   isActive(snapshot) {
     return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
+  }
+  showNotification(message: string, action: string) {
+    this.snackbar.open(message, action, {
+      duration: 5000
+    });
   }
 }

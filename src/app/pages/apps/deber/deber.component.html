@@ -91,16 +91,37 @@
           </ng-container>
   
           <!-- Text Columns -->
-          <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
-            <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-            
-              <th  *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header> {{ column.label }}</th>
-              <td  *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] }}</td>
-            
-            </ng-container>
+          <ng-container matColumnDef="nombreDeber">
+            <th
+              mat-header-cell
+              mat-sort-header
+              class="uppercase"
+              *matHeaderCellDef
+            >Título
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element["nombreDeber"] }}
+            </td>
           </ng-container>
-  
-          
+          <ng-container matColumnDef="calificacionDeber">
+            <th
+              mat-header-cell
+              mat-sort-header
+              class="uppercase"
+              *matHeaderCellDef
+            >Calificación
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element["calificacionDeber"] }}
+            </td>
+          </ng-container>
+          <!--DOWNLOADURL-->
+          <ng-container matColumnDef="downloadURL" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef>Deber</th>
+            <td mat-cell *matCellDef="let element">
+              <a href="{{element['downloadURL']}}">element</a>
+            </td>
+          </ng-container>
           <!-- Action Column -->
           <ng-container matColumnDef="actions">
             <th *matHeaderCellDef mat-header-cell mat-sort-header></th>

@@ -61,6 +61,7 @@ layoutCtrl = new FormControl('boxed');
     { label: 'Checkbox', property: 'checkbox', type: 'checkbox', visible: true },
     { label: 'Título',property: 'nombreDeber',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Calificación',property: 'calificacionDeber',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
+    { label: 'Deber',property: 'downloadURL',type: 'text', visible: true, cssClasses: ['text-secondary'] }, 
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
   pageSize = 10;
@@ -111,7 +112,6 @@ layoutCtrl = new FormControl('boxed');
       (data) => { // Success
         this.deber = data;
         this.dataSource.data = data;
-        console.log(data);
         //console.log(this.estudiante);
       },
       (err) => {
@@ -148,7 +148,7 @@ deleteDeber(deber: Deber[]){
   let tamaño = deber.length
   let promise = new Promise((resolve, reject) => {
     deber.forEach(deberes => {       
-    /*this.deberService.deleteDeber(deberes)
+    this.deberService.deleteDeber(deberes)
         .then(
           (data) => { // Success
             this.showNotification('Deber eliminado correctamente', 'CERRAR')
@@ -156,7 +156,7 @@ deleteDeber(deber: Deber[]){
           (err) => {
             this.showNotification('A ocurrido un ERROR', 'CERRAR')
           }
-        ); */
+        ); 
     })
     
     resolve()
@@ -176,17 +176,17 @@ updateDeber(deber :Deber){
   this.dialog.open(UploadTaskComponent, {
     data: deber,
   }).afterClosed().subscribe(updateDeber => {
-   /* if (updateDeber) {
+    if (updateDeber) {
       this.deberService.updateDeber(updateDeber)
         .then(
           (data) => { // Success
-            this.showNotification('Docente actualizado EXITOSAMENTE', 'OK')
+            this.showNotification('Deber actualizado EXITOSAMENTE', 'OK')
           },
           (err) => {
-            this.showNotification('ERROR al actualizar al Docente', 'CERRAR')  
+            this.showNotification('ERROR al actualizar al deber', 'CERRAR')  
           }
         ); 
-    }*/
+    }
   });
 
 }
