@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,28 +9,32 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 //
 import { AngularFireModule} from '@angular/fire';
-//import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
-import { AngularFireAuthModule } from '@angular/fire/auth'
-//import { DocenteAppRoutingModule } from './pages/apps/docente/docente-app-routing.module';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+//import { DropzoneDirective } from './dropzone.directive';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+//
+/////////////////////////////
+
+
+
 
 @NgModule({
-  declarations: [AppComponent],
+declarations: [AppComponent, /*DropzoneDirective*/],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    //
+    AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     FormsModule,
     AngularFireAuthModule,
-    // Vex
     VexModule,
-    //DocenteAppRoutingModule,
-    //EstudianteAppRoutingModule
+    NgxDropzoneModule
   ],
   providers: [],
   bootstrap: [AppComponent]

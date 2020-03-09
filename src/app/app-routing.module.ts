@@ -25,6 +25,16 @@ const childrenRoutes: VexRoutes = [
         loadChildren:() => import('./pages/apps/docente/docente.module').then(m=>m.DocenteModule)
       },
       {
+        path: 'deber',
+        loadChildren:() => import('./pages/apps/deber/deber.module').then(m=>m.DeberModule)
+      },
+      {
+        path: 'video',
+        loadChildren:() => import('./pages/apps/video/video.module').then(m=>m.VideoModule)
+      },
+
+
+      {
         path: 'chat',
         loadChildren: () => import('./pages/apps/chat/chat.module').then(m => m.ChatModule),
         data: {
