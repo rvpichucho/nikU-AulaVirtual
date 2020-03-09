@@ -1,11 +1,10 @@
-import { Observable} from 'rxjs';
 export class Deber {
     idDeber:String;
     nombreDeber:String;
-    downloadURL: Observable <String>;
+    downloadURL: string;
     path:string;
     descripcionDeber:String;
-    detalleDeber: File[];
+    detalleDeber: File[]= [];
     calificacionDeber: number;
     constructor(deber){
       this.idDeber = deber.idDeber;

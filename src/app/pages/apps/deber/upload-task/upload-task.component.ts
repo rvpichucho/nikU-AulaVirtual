@@ -59,6 +59,7 @@ export class UploadTaskComponent implements OnInit {
       this.cargarArchivo();
     } else {
       this.defaults = {} as Deber;
+      this.defaults.detalleDeber = [];
     }
       this.form = this.fb.group({
       idDeber:this.defaults.id||"",
@@ -67,24 +68,18 @@ export class UploadTaskComponent implements OnInit {
       path:[this.defaults.path||"",Validators.required],
       descripcionDeber:[this.defaults.descripcionDeber||"",Validators.required],
       calificacionDeber :[this.defaults.calificacionDeber||"",Validators.required],
-      detalleDeber: [[this.defaults.detalleDeber]||"",Validators.required],
-    }
-    );
-    console.log(this.defaults);
+      detalleDeber: [this.defaults.detalleDeber||"",Validators.required],
+    });
   }
   cargarArchivo(){
     var storageRef = this.storage.ref(this.path);
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'blob';
-    console.log("assssssssssssssssssssssssssssss");
-    console.log(this.download);
-
       xhr.onload = function(event) {
         var blob = xhr.response;
       };
       xhr.open('GET', this.download);
       xhr.send();
-      // Or inserted into an <img> element:
   }
 
   save() {
@@ -96,19 +91,12 @@ export class UploadTaskComponent implements OnInit {
   }
   createDeber() {
     const deber = this.form.value;
-    deber.downloadURL = this.download;
-    deber.path = this.path
+    deber.detalleDeber = this.files;
     this.dialogRef.close(deber);
   }
   updateDeber() {
     const deber = this.form.value;
-    if(this.files[0] != null){ 
-      deber.downloadURL = this.download;
-      deber.path = this.path
-    }
-    else{
-
-    }
+    deber.detalleDeber = this.files;
     this.dialogRef.close(deber);
   }
   isCreateMode() {
@@ -117,12 +105,6 @@ export class UploadTaskComponent implements OnInit {
   isUpdateMode() {
     return this.mode === "update";
   }
-  validarVacio(){
-    if(this.files[0] != null){ 
-      var storageRef = this.storage.ref(this.path);
-      storageRef.delete();
-    }
-  }
   onSelect(event) {
     this.files.push(...event.addedFiles);
     const file= this.files[0];
@@ -130,25 +112,9 @@ export class UploadTaskComponent implements OnInit {
       this.showNotification('Archivo no válido, solo PDF', 'OK');
       this.onRemove(this.files);
     }
-    else{
-      this.path = `deber/${new Date().getTime()}_{file.name}`;  
-      const ref = this.storage.ref(this.path);
-      this.task = this.storage.upload(this.path,file);
-      this.percentage = this.task.percentageChanges();
-      this.snapshot   = this.task.snapshotChanges();
-      this.snapshot   = this.task.snapshotChanges().pipe(
-      // The file's download URL
-      finalize( async() =>  {
-        this.download = await ref.getDownloadURL().toPromise();
-        //this.db.collection('deber').add( { downloadURL: this.downloadURL, path });
-      }),
-      );
-    }
   }
   onRemove(event) {
     this.files.splice(this.files.indexOf(event), 1);
-    var storageRef = this.storage.ref(this.path);
-    storageRef.delete();
   }
   isActive(snapshot) {
     return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;

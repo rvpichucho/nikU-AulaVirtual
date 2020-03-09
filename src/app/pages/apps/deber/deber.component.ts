@@ -112,7 +112,6 @@ layoutCtrl = new FormControl('boxed');
       (data) => { // Success
         this.deber = data;
         this.dataSource.data = data;
-        //console.log(this.estudiante);
       },
       (err) => {
         console.error(err)

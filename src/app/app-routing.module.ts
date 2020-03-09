@@ -28,6 +28,10 @@ const childrenRoutes: VexRoutes = [
         path: 'deber',
         loadChildren:() => import('./pages/apps/deber/deber.module').then(m=>m.DeberModule)
       },
+      {
+        path: 'video',
+        loadChildren:() => import('./pages/apps/video/video.module').then(m=>m.VideoModule)
+      },
 
 
       {

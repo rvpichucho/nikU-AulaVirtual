@@ -123,6 +123,28 @@ export class AppComponent {
           },
           {
             type: 'link',
+            label: 'deber',
+            route: '/apps/deber',
+            icon: icChat,
+            badge: {
+              value: '16',
+              background: theme.colors.cyan['500'],
+              color: theme.textColor['cyan-contrast']['600']
+            },
+          },
+          {
+            type: 'link',
+            label: 'video',
+            route: '/apps/video',
+            icon: icChat,
+            badge: {
+              value: '16',
+              background: theme.colors.cyan['500'],
+              color: theme.textColor['cyan-contrast']['600']
+            },
+          },
+          {
+            type: 'link',
             label: 'All-In-One Table',
             route: '/apps/aio-table',
             icon: icAssigment

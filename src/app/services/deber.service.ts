@@ -19,19 +19,39 @@ import { MatDialog } from '@angular/material';
 })
 export class DeberService {
   task: AngularFireUploadTask;
+  snapshot: Observable<any>;
   profileUrl: Observable<string | null>;
   constructor(private storage: AngularFireStorage,private  firestore: AngularFirestore) { }
   //
   createDeber(data)
    {
-    data.detalleDeber=null;
-    return new Promise<any>((resolve, reject) =>{
-      this.firestore
+     return new Promise((resolve, reject) => {
+     if(data.detalleDeber[0]!=null){
+        data.path = `deber/${new Date().getTime()}_{data.detalleDeber[0].name}`;  
+        var ref = this.storage.ref(data.path);
+        const upload =this.storage.upload(data.path,data.detalleDeber[0]);
+        const sub = upload.snapshotChanges().pipe(
+          finalize( async () => {
+            try {
+              data.downloadURL = await ref.getDownloadURL().toPromise()
+              data.detalleDeber = null;
+              this.firestore
+                .collection("deber")
+                .add(data)
+            } catch (err) {
+              reject(err) 
+            }
+            sub.unsubscribe()
+          })
+        ).subscribe((data) => {})
+      }    
+      else{
+        data.detalleDeber = null;
+        this.firestore
           .collection("deber")
           .add(data)
-          .then(res => {}, err => reject(err));
-      });
-  
+      }
+    })
   }
   getDeber() {
     return this.firestore.collection<Deber>('deber').snapshotChanges().pipe(
@@ -47,15 +67,47 @@ export class DeberService {
     )*/
   }
   updateDeber(data){
-    data.detalleDeber=null;
-    console.log(data);
-    return this.firestore.collection("deber").doc(data.idDeber).set(data);
+    if(data.detalleDeber[0] != null){ 
+      return new Promise((resolve, reject) => {
+        if(data.detalleDeber[0]!=null){
+          //
+          if(data.path != ""){
+            var storageRef = this.storage.ref(data.path);
+            storageRef.delete();
+          }
+          //
+          data.path = `deber/${new Date().getTime()}_{data.detalleDeber[0].name}`;  
+          var ref = this.storage.ref(data.path);
+          const upload =this.storage.upload(data.path,data.detalleDeber[0]);
+           const sub = upload.snapshotChanges().pipe(
+             finalize( async () => {
+               try {
+                 data.downloadURL = await ref.getDownloadURL().toPromise()
+                 data.detalleDeber = null;
+                this.firestore.collection("deber").doc(data.idDeber).set(data);
+               } catch (err) {
+                 reject(err) 
+               }
+               sub.unsubscribe()
+             })
+           ).subscribe((data) => {})
+         }    
+       })
+    }
+    else{
+      console.log(data);
+      return this.firestore.collection("deber").doc(data.idDeber).set(data);
+    }
   }
   deleteDeber(data){
-    var storageRef = this.storage.ref(data.path);
-    console.log(data.path);
-    storageRef.delete();
-    return this.firestore.collection("deber").doc(data.id).delete();
+    if(data.downloadURL != ""){ 
+      var storageRef = this.storage.ref(data.path);
+      storageRef.delete();
+      return this.firestore.collection("deber").doc(data.id).delete();  
+    }
+    else{
+      return this.firestore.collection("deber").doc(data.id).delete();  
+    }
   }
   getbyID(id: string){
     
