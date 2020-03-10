@@ -33,6 +33,8 @@ import { DeberService} from 'src/app/services/deber.service';
 //
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import data from '@iconify/icons-ic/twotone-group';
+
 
 @Component({
 
@@ -56,6 +58,7 @@ export class DeberComponent implements OnInit {
 //
 layoutCtrl = new FormControl('boxed');
   deber :Deber[];
+  nombreA: String[]=[];
   @Input()
   columns: TableColumn<Deber>[] = [
     { label: 'Checkbox', property: 'checkbox', type: 'checkbox', visible: true },
@@ -112,12 +115,16 @@ layoutCtrl = new FormControl('boxed');
       (data) => { // Success
         this.deber = data;
         this.dataSource.data = data;
+        for(var i =0, len = this.deber.length; i < len; i++){
+          //console.log(this.deber[i].path);
+          this.nombreA[i] = this.deber[i].path.replace(/^.*[\\\/_]/, '');
+        }        
+        //this.deber[0].path = this.deber[0].path.replace(/^.*[\\\/_]/, '')
       },
       (err) => {
         console.error(err)
       }
     );
-    //this.actualizarMensajes();
     this.searchCtrl.valueChanges.pipe(
       untilDestroyed(this)
     ).subscribe(value => this.onFilterChange(value));
@@ -127,7 +134,13 @@ layoutCtrl = new FormControl('boxed');
     this.dataSource.sort = this.sort;
   }
 //
-
+/*nombreArchivo(){
+  for(var i =0, len = this.deber.length; i < len; i++){
+    this.nombreA[i] = this.deber[i].path.replace(/^.*[\\\/_]/, '');
+    console.log(len)
+  }
+}
+*/
 createDeber() {
   this.dialog.open(UploadTaskComponent).afterClosed().subscribe((deber: Deber) => {
     if (deber) {

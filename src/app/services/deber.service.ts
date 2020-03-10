@@ -27,7 +27,8 @@ export class DeberService {
    {
      return new Promise((resolve, reject) => {
      if(data.detalleDeber[0]!=null){
-        data.path = `deber/${new Date().getTime()}_{data.detalleDeber[0].name}`;  
+        data.path = `deber/${new Date().getTime()}_${data.detalleDeber[0].name}`;  
+        console.log(data.path);
         var ref = this.storage.ref(data.path);
         const upload =this.storage.upload(data.path,data.detalleDeber[0]);
         const sub = upload.snapshotChanges().pipe(

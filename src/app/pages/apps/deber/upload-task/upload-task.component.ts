@@ -112,6 +112,7 @@ export class UploadTaskComponent implements OnInit {
       this.showNotification('Archivo no válido, solo PDF', 'OK');
       this.onRemove(this.files);
     }
+    
   }
   onRemove(event) {
     this.files.splice(this.files.indexOf(event), 1);
