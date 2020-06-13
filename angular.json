@@ -126,6 +126,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "vex"
+}
+    }
+  },
+  "cli": {
+    "analytics": "676e3c9a-5ec6-4ca9-ae8b-9bb50e74a00d"
+  }
 }
